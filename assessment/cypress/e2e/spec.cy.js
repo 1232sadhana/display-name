@@ -1,6 +1,6 @@
 describe("Initial Page Load Tests", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000");
+    cy.visit("https://xdisplayname-two.vercel.app/");
   });
 
   it("checks initial rendering of the page", () => {
@@ -15,7 +15,7 @@ describe("Initial Page Load Tests", () => {
 
 describe("Input Field Functionality Tests", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000");
+    cy.visit("https://xdisplayname-two.vercel.app/");
   });
 
   it("tests input fields functionality", () => {
@@ -29,14 +29,14 @@ describe("Input Field Functionality Tests", () => {
 
 describe("Form Submission Tests", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000");
+    cy.visit("https://xdisplayname-two.vercel.app/");
   });
 
   it("submits the form and displays the full name", () => {
     cy.get('input[type="text"]').first().type("John");
     cy.get('input[type="text"]').last().type("Doe");
     cy.get('button[type="submit"]').click();
-    cy.get("form").next().should("contain", "Full Name: John Doe");
+    cy.get("#fullNameDisplay").should("contain", "Full Name: John Doe");
   });
 
   it("checks if the form submission does not reload the page", () => {
@@ -53,27 +53,26 @@ describe("Form Submission Tests", () => {
     cy.get('input[type="text"]').last().should("have.value", lastName);
   });
 });
-
 describe("Edge Case Tests", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000");
+    cy.visit("https://xdisplayname-two.vercel.app/");
   });
 
   it("submits the form with one field empty and does not display a full name", () => {
     cy.get('input[type="text"]').first().type("John");
     cy.get('button[type="submit"]').click();
-    cy.get("form").next().should("not.exist");
+    cy.get("#fullNameDisplay").should("not.exist"); // Ensure the full name display does not exist
   });
 
   it("submits the form with both fields empty and does not display a full name", () => {
     cy.get('button[type="submit"]').click();
-    cy.get("form").next().should("not.exist");
+    cy.get("#fullNameDisplay").should("not.exist"); // Ensure the full name display does not exist
   });
 
   it("tests various inputs including special characters and numbers", () => {
     cy.get('input[type="text"]').first().type("Jane123");
     cy.get('input[type="text"]').last().type("Doe!");
     cy.get('button[type="submit"]').click();
-    cy.get("form").next().should("contain", "Full Name: Jane123 Doe!");
+    cy.get("#fullNameDisplay").should("contain", "Full Name: Jane123 Doe!"); // Ensure the full name is correctly displayed
   });
 });
